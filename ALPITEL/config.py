@@ -1,4 +1,5 @@
 import os
+import time
 
 from dotenv import load_dotenv
 from selenium import webdriver
@@ -52,6 +53,7 @@ def baixar_relatorio(relatorio, driver):
       driver.get(f"https://sofitview.com.br/#/client/reports/{relatorio}")
       botao_download = wait.until(EC.element_to_be_clickable((By.XPATH, "//button[@title = 'Exportar como planilha']")))
       botao_download.click()
+      time.sleep(20)
 
 def renomear_arquivo(nome_antigo, nome_novo, pasta_download):
     import os
