@@ -32,7 +32,7 @@ def criar_driver(pasta_download):
     return webdriver.Chrome(options=options)
         
         
-def fazer_login(driver, usuario=USERNAME, senha=PASSWORD):
+def fazer_login(driver, relatorio, usuario=USERNAME, senha=PASSWORD):
         wait = WebDriverWait(driver, 10)
         driver.get("https://sofitview.com.br/#/login")
         print("2.1. Acessando página de login...")
@@ -46,11 +46,24 @@ def fazer_login(driver, usuario=USERNAME, senha=PASSWORD):
 
         wait.until(EC.url_contains("/client"))
         print("2.2. Login bem-sucedido, redirecionado para a página do cliente.")
+        driver.get(f"https://sofitview.com.br/#/client/reports/{relatorio}")
 
+def filtrar_data(driver, data_inical, data_final=None):
+     wait = WebDriverWait(driver, 20)
+     filtros = wait.until(EC.element_to_be_clickable((By.XPATH, "//h3[contains(., 'Filtros ')]")))
+     filtros.click()
+     input_data_inicial = wait.until(EC.presence_of_element_located((By.XPATH, "//input[@name='datePeriodStart']")))
+     input_data_inicial.clear() 
+     input_data_inicial.send_keys(data_inical)
+     if data_final:
+        input_data_final = driver.find_element(By.XPATH, "//input[@name='datePeriodEnd']")
+        input_data_final.clear() 
+        input_data_final.send_keys(data_final)
+     botao_atualizar = wait.until(EC.element_to_be_clickable((By.XPATH, "//button[@title='Atualizar relatório']")))
+     botao_atualizar.click()
 
-def baixar_relatorio(relatorio, driver):
+def baixar_relatorio(driver):
       wait = WebDriverWait(driver, 60)
-      driver.get(f"https://sofitview.com.br/#/client/reports/{relatorio}")
       botao_download = wait.until(EC.element_to_be_clickable((By.XPATH, "//button[@title = 'Exportar como planilha']")))
       botao_download.click()
       time.sleep(20)

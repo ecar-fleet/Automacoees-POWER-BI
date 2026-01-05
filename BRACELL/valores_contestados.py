@@ -3,8 +3,8 @@ import config
 pasta_download = r"C:\Users\Dell\Ecarfleet\Intranet - AUTOMATIZAÇÃO POWER BI\Bracell - SP\Manutenção\Valores Contestados"
 
 navegador = config.criar_driver(pasta_download)
-config.fazer_login(driver=navegador)
-config.baixar_relatorio("5791", driver=navegador)
+config.fazer_login(driver=navegador, relatorio="5791")
+config.baixar_relatorio(driver=navegador)
 
 # Encontra o arquivo baixado (que tem a data no nome) e renomeia
 arquivo_baixado = config.encontrar_arquivo_baixado(pasta_download, "Valores Contestados  SP.xlsx")

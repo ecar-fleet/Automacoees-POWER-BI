@@ -1,0 +1,11 @@
+import config
+
+pasta_download = r"C:\Users\Dell\Ecarfleet\Intranet - AUTOMATIZAÇÃO POWER BI\Bracell - SP\Sinistros Comite"
+
+navegador = config.criar_driver(pasta_download)
+config.fazer_login(driver=navegador, relatorio="2656")
+config.baixar_relatorio( driver=navegador)
+
+# Encontra o arquivo baixado (que tem a data no nome) e renomeia
+arquivo_baixado = config.encontrar_arquivo_baixado(pasta_download, "Sinistros Comite.xlsx")
+config.renomear_arquivo(arquivo_baixado, "Sinistros Comite.xlsx", pasta_download)
